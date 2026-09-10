@@ -1,0 +1,135 @@
+/* 全局默认样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    background-color: #fffbeb; /* 浅鹅黄色页面底色 */
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 导航header：鹅黄色主题 */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    background-color: #ffecb3; /* 鹅黄色 */
+    color: #222;
+}
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+.nav a {
+    margin-left: 24px;
+}
+.nav a:hover {
+    color: #93c9f5; /* 天蓝色hover效果 */
+}
+
+/* 横幅banner：鹅黄色背景 */
+.banner {
+    background-color: #ffe082; /* 鹅黄色横幅 */
+    color: #222;
+    text-align: center;
+    padding: 80px 20px;
+}
+.banner h1 {
+    font-size: 38px;
+}
+
+/* 主体main */
+.main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+.main > section {
+    margin-bottom: 50px;
+    background: #ffffff;
+    padding:30px;
+    border-radius:12px;
+    border-left:6px solid #93c9f5; /* 左侧天蓝色装饰条 */
+}
+.main h2 {
+    font-size: 28px;
+    margin-bottom:16px;
+    color:#ffb300; /* 标题用深一点的鹅黄色 */
+}
+.main p {
+    font-size:17px;
+    color:#444;
+}
+
+/* 页脚footer：天蓝色 */
+.footer {
+    background-color:#93c9f5; /* 天蓝色页脚 */
+    color:#fff;
+    text-align:center;
+    padding:24px;
+}
+
+/* ========== 树洞留言板样式 ========== * ps（only treehole has msg board,it only appear in treehole page）*/
+.msg-board {
+    margin-top:30px;
+}
+.msg-list {
+    background: #fffbeb;
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:20px;
+    min-height:120px;
+}
+.msg-item {
+    background: #ffffff;
+    padding:12px 16px;
+    border-radius:8px;
+    margin-bottom:12px;
+    border-left:5px solid #64B5C8;
+}
+#msgInput {
+    width:100%;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:14px;
+    font-size:16px;
+    background:#fff;
+    resize:none;
+}
+#submitMsgBtn {
+    margin-top:12px;
+    padding:12px 24px;
+    background:#64B5C8;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+#submitMsgBtn:hover {
+    background:#ffecb3;
+    color:#222;
+}
+
+.treehouse {
+    background-color: #fff8e6; /* 背景颜色，可以换成别的色值 */
+    padding: 20px; /* 内边距，文字和板块边框拉开距离 */
+    margin-top: 30px; /* 和上一个板块之间的距离，板块上下间距 */
+    border-radius: 12px; /* 圆角，和你现在页面卡片风格统一 */
+}
+/* 还可以单独控制这个板块里面的h2标题样式 */
+.treehouse h2 {
+    color: #3aaf2b; /* 单独修改这个板块标题颜色 */
+}
+/* 单独控制这个板块里面的段落文字 */
+.treehouse p {
+    font-size: 16px;
+    line-height: 1.6; /* 行高，文字行与行的距离 */
+}

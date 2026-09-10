@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JY树洞 | JY的主页</title>
+</head>
+<body>
+    <!-- 导航栏，和首页完全一样 -->
+    <header class="header">
+        <div class="logo">JY大人</div>
+        <nav class="nav">
+            <a href="index.html">回到首页</a>
+            <a href="about.html">About Me</a>
+            <a href="treehole.html">JY树洞</a>
+        </nav>
+    </header>
+
+    <section class="banner">
+        <h1>JY树洞</h1>
+    </section>
+
+    <main class="main">
+    <section>
+        <h2>树洞空间</h2>
+        <p>在这里写下你的心情与随笔，留下留言。</p>
+
+        <!-- 留言板区域 -->
+        <div class="msg-board">
+            <h3>留言板</h3>
+            <!-- 用来存放所有留言 -->
+            <div id="msgList" class="msg-list"></div>
+            <textarea id="msgInput" placeholder="写下你的留言..." rows="4"></textarea>
+            <button id="submitMsgBtn">提交留言</button>
+        </div>
+    </section>
+</main>
+
+    <footer class="footer">
+        <p>© 2026 JY的主页</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
