@@ -1,55 +1,85 @@
-// 判断当前访问的页面是不是 treehole.html
-const currentPage = window.location.pathname;
+let currentPage = window.location.pathname;
 
-// 只有进入树洞页面才执行弹窗(后续留言板功能也在大括号后面写)
 if (currentPage.includes("treehole.html")) {
     alert("欢迎来到JY树洞");
 
-   // 1. 定义留言数组，从localStorage读取旧留言
-    let msgListData = JSON.parse(localStorage.getItem("treeholeMsg")) || [];
+    const supabaseUrl = "https://bobjcgridizyzxrpivis.supabase.co";
+    const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvYmpjZ3JpZGl6eXp4cnBpdmlzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkwMzExMjYsImV4cCI6MjEwNDYwNzEyNn0.HUCUWac9mrEHG-mISjbCAAWwgDlcTF1D8gb0oo2aJiI";
+    // 修复重名问题！客户端实例改名叫 sb
+    const { createClient } = supabase;
+    const sb = createClient(supabaseUrl, supabaseAnonKey);
 
     const submitBtn = document.getElementById("submitMsgBtn");
     const msgInput = document.getElementById("msgInput");
     const msgListDom = document.getElementById("msgList");
 
-    // 函数：渲染所有留言到页面
-    function renderMessages() {
-        // 先清空页面现有留言
+    async function renderMessages() {
         msgListDom.innerHTML = "";
-        // 循环生成每条留言
-        msgListData.forEach(function (msgText) {
+        const { data, error } = await sb
+            .from("messages")
+            .select("content, created_at")
+            .order("created_at", { ascending: false });
+
+        if (error) {
+            console.error("读取留言失败：", error);
+            return;
+        }
+        if (!data) return;
+
+        data.forEach(function (item) {
             const newMsg = document.createElement("div");
             newMsg.className = "msg-item";
-            newMsg.innerText = msgText;
+            newMsg.innerText = `${item.content}\n【${new Date(item.created_at).toLocaleString()}】`;
             msgListDom.appendChild(newMsg);
         })
     }
 
-    // 页面打开时，立刻渲染已经保存的留言
     renderMessages();
 
-    // 点击提交按钮添加留言
-    submitBtn.addEventListener("click", function () {
+    submitBtn.addEventListener("click", async function () {
         const text = msgInput.value.trim();
         if (text !== "") {
-            // 新增留言放进数组
-            msgListData.push(text);
-            // 保存到浏览器本地存储
-            localStorage.setItem("treeholeMsg", JSON.stringify(msgListData));
-            // 重新渲染页面
-            renderMessages();
-            // 清空输入框
+            const { error } = await sb
+                .from("messages")
+                .insert([{ content: text }]);
+
+            if (error) {
+                alert("提交失败！");
+                console.error(error);
+                return;
+            }
             msgInput.value = "";
+            renderMessages();
         } else {
             alert("留言不能为空哦");
         }
     })
 
-    // 回车快速提交留言
-    msgInput.addEventListener("keydown", function (e) {
+    msgInput.addEventListener("keydown", async function (e) {
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
             submitBtn.click();
         }
     })
 }
+
+// Prevent multiple submissions
+let isSubmitting = false;
+submitBtn.addEventListener("click", async function () {
+    if(isSubmitting) return;
+    const text = msgInput.value.trim();
+    if (text === "") {
+        alert("留言不能为空哦");
+        return;
+    }
+    isSubmitting = true;
+    const { error } = await sb.from("messages").insert([{ content: text }]);
+    if (error) {
+        alert("提交失败！");
+        console.error(error);
+    } else {
+        msgInput.value = "";
+        renderMessages();
+    }
+    isSubmitting = false;
+})
